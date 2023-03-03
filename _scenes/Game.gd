@@ -9,5 +9,3 @@ var num_bombs
 
 func _ready():
 	pass 
-
-

@@ -8,10 +8,13 @@ script = ExtResource( 1 )
 laser = ExtResource( 2 )
 
 [node name="PlayerCollider" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -30, 0, 0, -60, 30, 0 )
+position = Vector2( 0, -5.96046e-08 )
+scale = Vector2( 0.552083, 0.552083 )
+polygon = PoolVector2Array( -28.9811, 1.07963e-07, 0, -57.9623, 28.9811, 1.07963e-07 )
 
 [node name="PlayerShape" type="Polygon2D" parent="."]
+scale = Vector2( 0.533333, 0.533333 )
 polygon = PoolVector2Array( -30, 0, 0, -60, 30, 0 )
 
 [node name="Gun" type="Position2D" parent="."]
-position = Vector2( 0, -59 )
+position = Vector2( 0, -64 )

@@ -19,10 +19,12 @@ func _physics_process(delta):
 	for slide in get_slide_count():
 		var collision := get_slide_collision(slide)
 		
-		if collision.collider is Enemy:
-			print("Enemy HIT")
+		if collision.collider is Invader:
+			print("Invader HIT")
 			laser_hit()
-	pass
+		if collision.collider is Player:
+			print("Player HIT")
+			laser_hit()
 
 func laser_hit():
 	emit_signal("laser_hit")
