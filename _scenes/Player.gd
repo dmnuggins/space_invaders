@@ -27,4 +27,3 @@ func shoot():
 	var l = laser.instance()
 	owner.add_child(l)
 	l.position = $Gun.global_position
-

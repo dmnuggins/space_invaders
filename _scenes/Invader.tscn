@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://_scenes/Invader.gd" type="Script" id=1]
+[ext_resource path="res://_scenes/Laser.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
-[node name="Invader" type="KinematicBody2D"]
+[node name="Invader" type="KinematicBody2D" groups=["enemy"]]
 script = ExtResource( 1 )
+laser = ExtResource( 2 )
 
 [node name="InvaderCollider" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -20,3 +22,6 @@ margin_left = -8.0
 margin_top = -8.0
 margin_right = 8.0
 margin_bottom = 8.0
+
+[node name="Gun" type="Position2D" parent="."]
+position = Vector2( 0, 32 )

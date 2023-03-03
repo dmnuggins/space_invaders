@@ -7,11 +7,10 @@ signal laser_hit
 
 var velocity = Vector2.ZERO
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pass
 	
-
 func _physics_process(delta):
 	velocity.y = -speed
 	move_and_slide(velocity, Vector2.UP)

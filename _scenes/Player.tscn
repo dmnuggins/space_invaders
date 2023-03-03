@@ -17,4 +17,4 @@ scale = Vector2( 0.533333, 0.533333 )
 polygon = PoolVector2Array( -30, 0, 0, -60, 30, 0 )
 
 [node name="Gun" type="Position2D" parent="."]
-position = Vector2( 0, -64 )
+position = Vector2( 0, -50 )

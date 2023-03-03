@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://_scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://_scenes/Game.gd" type="Script" id=2]
@@ -6,10 +6,16 @@
 [ext_resource path="res://_scenes/Invaders.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 400.5 )
+extents = Vector2( 4, 400.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 401 )
+extents = Vector2( 4, 401 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 12, 400 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 12, 398.5 )
 
 [node name="Game" type="Node"]
 script = ExtResource( 2 )
@@ -32,64 +38,80 @@ margin_top = 752.0
 margin_right = 600.0
 margin_bottom = 800.0
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Bounds" type="Node2D" parent="."]
 
-[node name="Row" type="Node2D" parent="Node2D"]
+[node name="InvaderBounds" type="Node2D" parent="Bounds"]
+
+[node name="LeftBound" type="Area2D" parent="Bounds/InvaderBounds"]
+
+[node name="LeftBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/LeftBound"]
+position = Vector2( 12, 400 )
+shape = SubResource( 1 )
+
+[node name="RightBound" type="Area2D" parent="Bounds/InvaderBounds"]
+
+[node name="RightBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/RightBound"]
+position = Vector2( 588, 400 )
+shape = SubResource( 2 )
+
+[node name="PlayerBounds" type="Node2D" parent="Bounds"]
+
+[node name="LeftWall" type="StaticBody2D" parent="Bounds/PlayerBounds"]
+
+[node name="LeftWallCollider" type="CollisionShape2D" parent="Bounds/PlayerBounds/LeftWall"]
+position = Vector2( -12, 400 )
+shape = SubResource( 3 )
+
+[node name="RightWall" type="StaticBody2D" parent="Bounds/PlayerBounds"]
+
+[node name="RightWallCollider" type="CollisionShape2D" parent="Bounds/PlayerBounds/RightWall"]
+position = Vector2( 612, 400 )
+shape = SubResource( 4 )
+
+[node name="Invaders" type="Node2D" parent="."]
+
+[node name="Row" type="Node2D" parent="Invaders"]
 script = ExtResource( 4 )
 
-[node name="Invader0" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader0" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 50, 100 )
 
-[node name="Invader1" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader1" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 100, 100 )
 
-[node name="Invader2" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader2" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 150, 100 )
 
-[node name="Invader3" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader3" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 200, 100 )
 
-[node name="Invader4" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader4" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 250, 100 )
 
-[node name="Invader5" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader5" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 300, 100 )
 
-[node name="Invader6" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader6" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 350, 100 )
 
-[node name="Invader7" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader7" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 400, 100 )
 
-[node name="Invader8" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader8" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 450, 100 )
 
-[node name="Invader9" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader9" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 500, 100 )
 
-[node name="Invader10" parent="Node2D/Row" instance=ExtResource( 3 )]
+[node name="Invader10" parent="Invaders/Row" instance=ExtResource( 3 )]
 position = Vector2( 550, 100 )
 
-[node name="MoveTimer" type="Timer" parent="Node2D/Row"]
+[node name="MoveTimer" type="Timer" parent="Invaders/Row"]
 autostart = true
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 320, 744 )
 
-[node name="Bounds" type="Node2D" parent="."]
-
-[node name="LeftBound" type="Area2D" parent="Bounds"]
-
-[node name="LeftBoundCollider" type="CollisionShape2D" parent="Bounds/LeftBound"]
-position = Vector2( 8, 399.5 )
-shape = SubResource( 1 )
-
-[node name="RightBound" type="Area2D" parent="Bounds"]
-
-[node name="RightBoundCollider" type="CollisionShape2D" parent="Bounds/RightBound"]
-position = Vector2( 592, 400 )
-shape = SubResource( 2 )
-
-[connection signal="timeout" from="Node2D/Row/MoveTimer" to="Node2D/Row" method="_on_MoveTimer_timeout"]
-[connection signal="body_entered" from="Bounds/LeftBound" to="Node2D/Row" method="_on_LeftBound_body_entered"]
-[connection signal="body_entered" from="Bounds/RightBound" to="Node2D/Row" method="_on_RightBound_body_entered"]
+[connection signal="body_entered" from="Bounds/InvaderBounds/LeftBound" to="Invaders/Row" method="_on_LeftBound_body_entered"]
+[connection signal="body_entered" from="Bounds/InvaderBounds/RightBound" to="Invaders/Row" method="_on_RightBound_body_entered"]
+[connection signal="timeout" from="Invaders/Row/MoveTimer" to="Invaders/Row" method="_on_MoveTimer_timeout"]
