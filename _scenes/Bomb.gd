@@ -18,7 +18,6 @@ func _physics_process(delta):
 	if player_hit():
 #		print("Player destroyed")
 		pass
-	
 
 func bomb_hit():
 	emit_signal("bomb_hit")

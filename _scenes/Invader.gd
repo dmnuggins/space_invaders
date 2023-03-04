@@ -10,7 +10,7 @@ signal not_clear
 signal hit
 
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func _physics_process(delta):
 	pass
@@ -25,8 +25,3 @@ func ready_to_shoot() -> bool:
 func invader_hit():
 	emit_signal("hit")
 
-#func shoot():
-#	var b = bomb.instance()
-#	owner.add_child(b)
-#	b.position = $Gun.global_position
-##	print("GUN x:", $Gun.global_position.x, " y:", $Gun.position.y)
