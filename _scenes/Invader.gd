@@ -24,4 +24,5 @@ func ready_to_shoot() -> bool:
 
 func invader_hit():
 	emit_signal("hit")
+	queue_free()
 

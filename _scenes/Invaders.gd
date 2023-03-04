@@ -32,7 +32,7 @@ func update_position():
 func shoot():
 	var vis_invaders = get_visible_invaders()
 	
-	rand_invader = (randi() % 11)
+	rand_invader = (randi() % vis_invaders.size())
 	rand_time_interval = (randi() % 2 + 1)
 	
 	# gets random invader from visible invader array
