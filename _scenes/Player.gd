@@ -3,6 +3,7 @@ class_name Player
 
 
 export (PackedScene) var laser
+signal player_hit
 
 var speed = 300.0
 
@@ -22,6 +23,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
+
+func player_hit():
+	emit_signal("player_hit")
 
 func shoot():
 	var l = laser.instance()

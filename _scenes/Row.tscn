@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://_scenes/Invader.tscn" type="PackedScene" id=1]
+
+[node name="Row" type="Node2D"]
+
+[node name="Invader_0" parent="." instance=ExtResource( 1 )]
+position = Vector2( 50, 100 )
+
+[node name="Invader_1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 100, 100 )
+
+[node name="Invader_2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 150, 100 )
+
+[node name="Invader_3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 100 )
+
+[node name="Invader_4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 250, 100 )
+
+[node name="Invader_5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 300, 100 )
+
+[node name="Invader_6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 350, 100 )
+
+[node name="Invader_7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 400, 100 )
+
+[node name="Invader_8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 450, 100 )
+
+[node name="Invader_9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 500, 100 )
+
+[node name="Invader_10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 550, 100 )
