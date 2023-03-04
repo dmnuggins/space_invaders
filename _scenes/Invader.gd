@@ -15,6 +15,7 @@ func _ready():
 func _physics_process(delta):
 	pass
 
+# checks if invader is not blocked by another invader node
 func ready_to_shoot() -> bool:
 	var area = $InvaderSight
 	for body in area.get_overlapping_bodies():

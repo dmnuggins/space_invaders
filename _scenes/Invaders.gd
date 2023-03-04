@@ -7,6 +7,7 @@ var move_direction = 1
 var move_down_count = 0
 var bound_entered = false
 var ready_to_fire = false
+var game_running = true
 
 # used to determine the random invader to fire their weapon
 var rand_row
@@ -18,10 +19,16 @@ func _ready():
 	pass
 
 func _process(delta):
-	
+	# check if no invaders left
+	if no_invaders() && game_running:
+		$ShootTimer.stop()
+		$MoveTimer.stop()
+		print("NO MORE INVADERS")
+		game_running = false
 	pass
 
 # positional limits 10px (left) 590px (right)
+# update position of invaders by set unit of 10px
 func update_position():
 	var rows = get_children()
 	for row_num in rows:
@@ -29,7 +36,14 @@ func update_position():
 			row_num.position.x += (10 * move_direction)
 	pass
 
+# checks if number of invaders is more than 0
+func no_invaders() -> bool:
+	if get_visible_invaders().size() > 0:
+		return false
+	return true
+
 func shoot():
+	# array of invaders not blocked
 	var vis_invaders = get_visible_invaders()
 	
 	rand_invader = (randi() % vis_invaders.size())
@@ -41,8 +55,7 @@ func shoot():
 	owner.add_child(b)
 	b.position = invader.get_node("Gun").global_position
 
-# return an array of invaders that have visibility to shoot
-
+# return an array of invaders that are not blocked by other invaders below them
 func get_visible_invaders():
 	var rows = get_children()
 	var invader_row
