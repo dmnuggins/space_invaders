@@ -38,8 +38,12 @@ func invader_hit() -> bool:
 	for slide in get_slide_count():
 		var collision := get_slide_collision(slide)
 		
-		if collision.collider is Invader :
+		if collision.collider is Invader:
 			collision.collider.invader_hit()
+			laser_hit()
+			return true
+		if !(collision.collider is Player):
+			collision.collider.bomb_hit()
 			laser_hit()
 			return true
 	return false
