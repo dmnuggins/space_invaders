@@ -15,26 +15,18 @@ func _physics_process(delta):
 	velocity.y = -speed
 	move_and_slide(velocity, Vector2.UP)
 	
-	if invader_hit():
-#		print("Invader destroyed")
-		pass
-
-func laser_hit():
-	emit_signal("laser_hit")
-	queue_free()
-
-func invader_hit() -> bool:
-	
 	for slide in get_slide_count():
 		var collision := get_slide_collision(slide)
 		
 		if collision.collider is Invader:
 			collision.collider.invader_hit()
 			laser_hit()
-			return true
-		if collision.collider is Bomb:
-			collision.collider.bomb_hit() 
+
+		elif !(collision.collider is Invader):
+			collision.collider.bomb_hit()
 			laser_hit()
-			return true
-	return false
+
+func laser_hit():
+	emit_signal("laser_hit")
+	queue_free()
 

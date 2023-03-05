@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://_scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://_scenes/Game.gd" type="Script" id=2]
@@ -15,6 +15,12 @@ extents = Vector2( 12, 400 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 12, 398.5 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 300, 32 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 300, 32 )
 
 [node name="Game" type="Node"]
 script = ExtResource( 2 )
@@ -67,6 +73,20 @@ shape = SubResource( 3 )
 position = Vector2( 612, 400 )
 shape = SubResource( 4 )
 
+[node name="ProjectileBounds" type="Node2D" parent="Bounds"]
+
+[node name="Top" type="Area2D" parent="Bounds/ProjectileBounds"]
+
+[node name="TopCollider" type="CollisionShape2D" parent="Bounds/ProjectileBounds/Top"]
+position = Vector2( 300, -100 )
+shape = SubResource( 5 )
+
+[node name="Bottom" type="Area2D" parent="Bounds/ProjectileBounds"]
+
+[node name="BottomCollider" type="CollisionShape2D" parent="Bounds/ProjectileBounds/Bottom"]
+position = Vector2( 300, 900 )
+shape = SubResource( 6 )
+
 [node name="Invaders" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
@@ -74,3 +94,5 @@ position = Vector2( 320, 744 )
 
 [connection signal="body_entered" from="Bounds/InvaderBounds/LeftBound" to="Invaders" method="_on_LeftBound_body_entered"]
 [connection signal="body_entered" from="Bounds/InvaderBounds/RightBound" to="Invaders" method="_on_RightBound_body_entered"]
+[connection signal="body_entered" from="Bounds/ProjectileBounds/Top" to="." method="_on_Top_body_entered"]
+[connection signal="body_entered" from="Bounds/ProjectileBounds/Bottom" to="." method="_on_Bottom_body_entered"]
