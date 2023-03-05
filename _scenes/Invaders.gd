@@ -102,4 +102,5 @@ func _on_RightBound_body_entered(body: KinematicBody2D)->void:
 
 # when timeout, random invader will fire laser
 func _on_ShootTimer_timeout():
-	shoot()
+	if !no_invaders():
+		shoot()

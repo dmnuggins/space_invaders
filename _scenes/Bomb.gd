@@ -33,7 +33,7 @@ func player_hit() -> bool:
 			bomb_hit()
 			collision.collider.queue_free()
 			return true
-		if !(collision.collider is Player):
+		if collision.collider is Laser:
 			collision.collider.laser_hit()
 			bomb_hit()
 			return true

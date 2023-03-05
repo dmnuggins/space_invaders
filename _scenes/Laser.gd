@@ -32,7 +32,7 @@ func invader_hit() -> bool:
 			collision.collider.invader_hit()
 			laser_hit()
 			return true
-		if !(collision.collider is Player):
+		if collision.collider is Bomb:
 			collision.collider.bomb_hit() 
 			laser_hit()
 			return true
