@@ -3,7 +3,7 @@
 [ext_resource path="res://_scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://_scenes/Laser.tscn" type="PackedScene" id=2]
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
 laser = ExtResource( 2 )
 

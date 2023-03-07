@@ -3,20 +3,28 @@ extends Node2D
 export var row = 0
 export (PackedScene) var bomb
 
+var invaders
+#var bomb
+
 var move_direction = 1
 var move_down_count = 0
 var bound_entered = false
 var ready_to_fire = false
 var game_running = true
+var num_invaders_left = 44
 
 # used to determine the random invader to fire their weapon
 var rand_row
 var rand_invader
 var rand_time_interval
 
+# signals
+signal last_invader_hit
+signal invader_hit
+
 func _ready():
 	randomize()
-	pass
+	_connect_signals()
 
 func _process(delta):
 	# check if no invaders left
@@ -26,6 +34,15 @@ func _process(delta):
 		print("NO MORE INVADERS")
 		game_running = false
 	pass
+
+# connects invader signals
+func _connect_signals():
+	invaders = get_tree().get_nodes_in_group("invader")
+	for invader in invaders:
+		invader.connect("invader_hit", self, "_on_invader_hit")
+		# connect signal of observer node (in this case, invader) to function handling that signal
+	
+	# connect signals to outer wall bounds
 
 # positional limits 10px (left) 590px (right)
 # update position of invaders by set unit of 10px
@@ -86,17 +103,16 @@ func _on_MoveTimer_timeout():
 		
 	elif !bound_entered:
 		update_position()
-	pass
 
 # flips move direction of the invaders when KB2D enters A2D
 func _on_LeftBound_body_entered(body: KinematicBody2D)->void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("invader"):
 		move_direction = 1
 		bound_entered = true
 
 # flips move direction of the invaders when KB2D enters A2D
 func _on_RightBound_body_entered(body: KinematicBody2D)->void:
-	if body.is_in_group("enemy"):
+	if body.is_in_group("invader"):
 		move_direction = -1
 		bound_entered = true
 
@@ -104,3 +120,13 @@ func _on_RightBound_body_entered(body: KinematicBody2D)->void:
 func _on_ShootTimer_timeout():
 	if !no_invaders():
 		shoot()
+		print("shoot")
+	pass
+
+func _on_invader_hit(row: int):
+	num_invaders_left -= 1
+	if num_invaders_left == 0:
+		emit_signal("last_invader_hit")
+		print("last_invader_hit")
+	emit_signal("invader_hit", row)
+	print("Row:", row)

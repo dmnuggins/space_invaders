@@ -18,13 +18,15 @@ func _physics_process(delta):
 	for slide in get_slide_count():
 		var collision := get_slide_collision(slide)
 		
-		if collision.collider is Player :
+		if collision.collider.is_in_group("player"):
 			collision.collider.player_hit()
 			bomb_hit()
 			collision.collider.queue_free() # destroys player
-		elif !(collision.collider is Player):
-			collision.collider.laser_hit()
+		elif collision.collider.is_in_group("laser"):
+			collision.collider.laser_hit() 
 			bomb_hit()
+
+#=====SIGNALS=====#
 
 func bomb_hit():
 	emit_signal("bomb_hit")

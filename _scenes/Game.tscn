@@ -5,16 +5,16 @@
 [ext_resource path="res://_scenes/Invaders.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 400.5 )
+extents = Vector2( 4, 400.25 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4, 401 )
+extents = Vector2( 4, 400.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 12, 400 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 12, 398.5 )
+extents = Vector2( 12, 399.25 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 300, 32 )
@@ -38,10 +38,20 @@ anchor_bottom = 1.0
 margin_right = 600.0
 margin_bottom = 64.0
 
+[node name="ScoreLabel" type="Label" parent="UI/Score"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "420"
+
 [node name="Status" type="Control" parent="UI"]
 margin_top = 752.0
 margin_right = 600.0
 margin_bottom = 800.0
+
+[node name="LifePoints" type="Label" parent="UI/Status"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "000"
 
 [node name="Bounds" type="Node2D" parent="."]
 
@@ -50,27 +60,27 @@ margin_bottom = 800.0
 [node name="LeftBound" type="Area2D" parent="Bounds/InvaderBounds"]
 
 [node name="LeftBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/LeftBound"]
-position = Vector2( 12, 400 )
+position = Vector2( 12, 400.25 )
 shape = SubResource( 1 )
 
 [node name="RightBound" type="Area2D" parent="Bounds/InvaderBounds"]
 
 [node name="RightBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/RightBound"]
-position = Vector2( 588, 400 )
+position = Vector2( 588, 400.5 )
 shape = SubResource( 2 )
 
 [node name="PlayerBounds" type="Node2D" parent="Bounds"]
 
-[node name="LeftWall" type="StaticBody2D" parent="Bounds/PlayerBounds"]
+[node name="LeftWall" type="StaticBody2D" parent="Bounds/PlayerBounds" groups=["wall"]]
 
 [node name="LeftWallCollider" type="CollisionShape2D" parent="Bounds/PlayerBounds/LeftWall"]
 position = Vector2( -12, 400 )
 shape = SubResource( 3 )
 
-[node name="RightWall" type="StaticBody2D" parent="Bounds/PlayerBounds"]
+[node name="RightWall" type="StaticBody2D" parent="Bounds/PlayerBounds" groups=["wall"]]
 
 [node name="RightWallCollider" type="CollisionShape2D" parent="Bounds/PlayerBounds/RightWall"]
-position = Vector2( 612, 400 )
+position = Vector2( 612, 399.25 )
 shape = SubResource( 4 )
 
 [node name="ProjectileBounds" type="Node2D" parent="Bounds"]
@@ -92,7 +102,22 @@ shape = SubResource( 6 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 320, 744 )
 
+[node name="BonusTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="BonusSpawns" type="Node2D" parent="."]
+
+[node name="LeftSpawn" type="Position2D" parent="BonusSpawns"]
+position = Vector2( 30, 60 )
+
+[node name="RightSpawn" type="Position2D" parent="BonusSpawns"]
+position = Vector2( 570, 60 )
+
 [connection signal="body_entered" from="Bounds/InvaderBounds/LeftBound" to="Invaders" method="_on_LeftBound_body_entered"]
 [connection signal="body_entered" from="Bounds/InvaderBounds/RightBound" to="Invaders" method="_on_RightBound_body_entered"]
 [connection signal="body_entered" from="Bounds/ProjectileBounds/Top" to="." method="_on_Top_body_entered"]
 [connection signal="body_entered" from="Bounds/ProjectileBounds/Bottom" to="." method="_on_Bottom_body_entered"]
+[connection signal="invader_hit" from="Invaders" to="." method="_on_invader_hit"]
+[connection signal="player_hit" from="Player" to="." method="_on_Player_player_hit"]
+[connection signal="timeout" from="BonusTimer" to="." method="_on_BonusTimer_timeout"]

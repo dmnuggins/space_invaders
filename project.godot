@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://_scenes/Bomb.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Bonus",
+"language": "GDScript",
+"path": "res://_scenes/BonusInvader.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Invader",
 "language": "GDScript",
 "path": "res://_scenes/Invader.gd"
@@ -31,6 +36,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Bomb": "",
+"Bonus": "",
 "Invader": "",
 "Laser": "",
 "Player": ""
