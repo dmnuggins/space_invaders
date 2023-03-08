@@ -1,12 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://_scenes/Invader.tscn" type="PackedScene" id=1]
-[ext_resource path="res://_scenes/Bomb.tscn" type="PackedScene" id=2]
 [ext_resource path="res://_scenes/Invaders.gd" type="Script" id=3]
 
 [node name="Invaders" type="Node2D" groups=["invaders"]]
 script = ExtResource( 3 )
-bomb = ExtResource( 2 )
 
 [node name="Row_4" type="Node2D" parent="."]
 

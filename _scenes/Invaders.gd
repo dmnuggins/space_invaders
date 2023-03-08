@@ -1,10 +1,8 @@
 extends Node2D
 
 export var row = 0
-export (PackedScene) var bomb
 
 var invaders
-#var bomb
 
 var move_direction = 1
 var move_down_count = 0
@@ -21,6 +19,7 @@ var rand_time_interval
 # signals
 signal last_invader_hit
 signal invader_hit
+signal invader_shoot
 
 func _ready():
 	randomize()
@@ -42,9 +41,14 @@ func _connect_signals():
 		invader.connect("invader_hit", self, "_on_invader_hit")
 		# connect signal of observer node (in this case, invader) to function handling that signal
 	
+	# invaders movement bound signal connectors
+	var walls = get_tree().get_nodes_in_group("bounds")
+	var left_wall = walls[0]
+	var right_wall = walls[1]
+	left_wall.connect("body_entered", self,"_on_LeftBound_body_entered")
+	right_wall.connect("body_entered", self,"_on_RightBound_body_entered")
 	# connect signals to outer wall bounds
 
-# positional limits 10px (left) 590px (right)
 # update position of invaders by set unit of 10px
 func update_position():
 	var rows = get_children()
@@ -59,7 +63,8 @@ func no_invaders() -> bool:
 		return false
 	return true
 
-func shoot():
+# shoots projectile
+func shoot(var projectile):
 	# array of invaders not blocked
 	var vis_invaders = get_visible_invaders()
 	
@@ -68,9 +73,9 @@ func shoot():
 	
 	# gets random invader from visible invader array
 	var invader = vis_invaders[rand_invader]
-	var b = bomb.instance()
-	owner.add_child(b)
+	var b = projectile.instance()
 	b.position = invader.get_node("Gun").global_position
+	return b
 
 # return an array of invaders that are not blocked by other invaders below them
 func get_visible_invaders():
@@ -84,11 +89,8 @@ func get_visible_invaders():
 #			print(i)
 			invader_row = i.get_children()
 			for j in invader_row:
-#				print(j)
-#				print(j.ready_to_shoot())
 				if(j.ready_to_shoot()):
 					visible_array.push_back(j)
-	
 	return visible_array
 
 #=====SIGNALS=====#
@@ -119,8 +121,8 @@ func _on_RightBound_body_entered(body: KinematicBody2D)->void:
 # when timeout, random invader will fire laser
 func _on_ShootTimer_timeout():
 	if !no_invaders():
-		shoot()
-		print("shoot")
+#		shoot(projectile)
+		emit_signal("invader_shoot")
 	pass
 
 func _on_invader_hit(row: int):
