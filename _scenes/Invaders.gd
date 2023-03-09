@@ -69,7 +69,7 @@ func shoot(var projectile):
 	var vis_invaders = get_visible_invaders()
 	
 	rand_invader = (randi() % vis_invaders.size())
-	rand_time_interval = (randi() % 2 + 1)
+#	rand_time_interval = (randi() % 2 + 1)
 	
 	# gets random invader from visible invader array
 	var invader = vis_invaders[rand_invader]
@@ -89,9 +89,18 @@ func get_visible_invaders():
 #			print(i)
 			invader_row = i.get_children()
 			for j in invader_row:
+				j.check_sight()
 				if(j.ready_to_shoot()):
 					visible_array.push_back(j)
 	return visible_array
+
+func start_timers():
+	$MoveTimer.start()
+	$ShootTimer.start()
+	
+func stop_timers():
+	$MoveTimer.stop()
+	$ShootTimer.stop()
 
 #=====SIGNALS=====#
 
@@ -131,4 +140,4 @@ func _on_invader_hit(row: int):
 		emit_signal("last_invader_hit")
 		print("last_invader_hit")
 	emit_signal("invader_hit", row)
-	print("Row:", row)
+#	print("Row:", row)

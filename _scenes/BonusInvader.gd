@@ -3,7 +3,7 @@ class_name Bonus
 
 var speed = 200.0
 var velocity = Vector2.ZERO
-var score
+var value = 300
 
 signal bonus_hit
 
@@ -26,5 +26,5 @@ func _physics_process(delta):
 #=====SIGNALS=====#
 
 func bonus_hit():
-	emit_signal("bonus_hit", score)
+	emit_signal("bonus_hit", value)
 	queue_free()

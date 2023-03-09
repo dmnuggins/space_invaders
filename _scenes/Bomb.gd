@@ -21,11 +21,11 @@ func _physics_process(delta):
 		if collision.collider.is_in_group("player"):
 			collision.collider.player_hit()
 			bomb_hit()
-			collision.collider.queue_free() # destroys player
 		elif collision.collider.is_in_group("laser"):
 			collision.collider.laser_hit() 
 			bomb_hit()
-
+		elif collision.collider.is_in_group("projectile_bounds"):
+			bomb_hit()
 #=====SIGNALS=====#
 
 func bomb_hit():

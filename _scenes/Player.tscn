@@ -1,11 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://_scenes/Player.gd" type="Script" id=1]
-[ext_resource path="res://_scenes/Laser.tscn" type="PackedScene" id=2]
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
-laser = ExtResource( 2 )
+speed = 200.0
 
 [node name="PlayerCollider" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, -5.96046e-08 )

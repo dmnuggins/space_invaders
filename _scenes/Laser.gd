@@ -1,9 +1,8 @@
 extends KinematicBody2D
 class_name Laser
 
-
-export var speed = 600
-signal bomb_hit
+export var speed = 800
+signal laser_hit
 
 var velocity = Vector2.ZERO
 
@@ -20,7 +19,6 @@ func _physics_process(delta):
 		
 		if collision.collider.is_in_group("invader"):
 			collision.collider.invader_hit()
-			print("invader_hit")
 			laser_hit()
 
 		elif collision.collider.is_in_group("bomb"):
@@ -29,6 +27,9 @@ func _physics_process(delta):
 		
 		elif collision.collider.is_in_group("bonus"):
 			collision.collider.bonus_hit()
+			laser_hit()
+
+		elif collision.collider.is_in_group("projectile_bounds"):
 			laser_hit()
 
 #=====SIGNALS=====#

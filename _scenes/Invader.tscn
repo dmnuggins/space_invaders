@@ -1,11 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://_scenes/Invader.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 8 )
-
-[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 8 )
 
 [node name="Invader" type="KinematicBody2D" groups=["invader"]]
@@ -24,12 +21,6 @@ margin_top = -8.0
 margin_right = 8.0
 margin_bottom = 8.0
 
-[node name="InvaderSight" type="Area2D" parent="."]
-position = Vector2( 0, 30 )
-
-[node name="ReadyCollider" type="CollisionShape2D" parent="InvaderSight"]
-shape = SubResource( 2 )
-
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 0, 30 )
 __meta__ = {
@@ -37,8 +28,12 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="Gun"]
+visible = false
 margin_left = -2.0
 margin_top = -2.0
 margin_right = 2.0
 margin_bottom = 2.0
 color = Color( 1, 0, 0, 1 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+cast_to = Vector2( 0, 100 )
