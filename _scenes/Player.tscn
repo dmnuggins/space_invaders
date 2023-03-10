@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://_scenes/Player.gd" type="Script" id=1]
+[ext_resource path="res://_assets/player.png" type="Texture" id=2]
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
@@ -9,11 +10,12 @@ speed = 200.0
 [node name="PlayerCollider" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, -5.96046e-08 )
 scale = Vector2( 0.552083, 0.552083 )
-polygon = PoolVector2Array( -28.9811, 1.07963e-07, 0, -57.9623, 28.9811, 1.07963e-07 )
-
-[node name="PlayerShape" type="Polygon2D" parent="."]
-scale = Vector2( 0.533333, 0.533333 )
-polygon = PoolVector2Array( -30, 0, 0, -60, 30, 0 )
+polygon = PoolVector2Array( -30.7925, 12.6793, -30.7925, -7.24529, 0, -27.1698, 30.7925, -7.24529, 30.7925, 12.6793 )
 
 [node name="Gun" type="Position2D" parent="."]
-position = Vector2( 0, -50 )
+position = Vector2( 0, -32 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
+scale = Vector2( 1.34375, 1.34375 )
+texture = ExtResource( 2 )

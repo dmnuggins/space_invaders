@@ -1,5 +1,6 @@
 extends Node
 
+
 var invaders_prefab = preload("res://_scenes/Invaders.tscn")
 var invaders
 
@@ -74,6 +75,7 @@ func load_game():
 	
 	# instantiate invaders
 	invaders = invaders_prefab.instance()
+	invaders.global_position.y += 50
 	add_child(invaders)
 	
 	# instantiate player
@@ -110,7 +112,7 @@ func spawn_bonus_ship():
 	pass
 
 func update_score():
-	$UI/Score/ScoreLabel.text = str(score)
+	$UI/Points/ScoreContainer/VBoxContainer/Score.text = str(score)
 
 #=====SIGNALS=====#
 

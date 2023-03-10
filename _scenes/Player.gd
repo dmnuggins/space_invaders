@@ -6,8 +6,6 @@ signal player_collide
 
 export var speed = 300.0
 var ready_to_shoot = false
-var shot = true
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,10 +17,10 @@ func _physics_process(delta):
 		velocity.x = -speed
 	if Input.is_action_pressed("right"):
 		velocity.x = speed
-	if Input.is_action_pressed("up"):
-		velocity.y = -speed
-	if Input.is_action_pressed("down"):
-		velocity.y = speed
+#	if Input.is_action_pressed("up"):
+#		velocity.y = -speed
+#	if Input.is_action_pressed("down"):
+#		velocity.y = speed
 	
 	for slide in get_slide_count():
 		var collision := get_slide_collision(slide)
@@ -30,8 +28,7 @@ func _physics_process(delta):
 		if collision.collider.is_in_group("invader"):
 			print("PLAYER COLLIDED")
 			player_hit()
-			
-	
+
 	move_and_slide(velocity, Vector2.UP)
 
 func get_shoot_status():
@@ -39,7 +36,6 @@ func get_shoot_status():
 
 func set_shoot_status(status):
 	ready_to_shoot = status
-	
 
 func shoot(var projectile):
 	var l = projectile.instance()

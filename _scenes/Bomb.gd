@@ -2,7 +2,7 @@ extends KinematicBody2D
 class_name Bomb
 
 
-export var speed = 100
+export var speed = 250
 signal bomb_hit
 
 var velocity = Vector2.ZERO
@@ -26,6 +26,7 @@ func _physics_process(delta):
 			bomb_hit()
 		elif collision.collider.is_in_group("projectile_bounds"):
 			bomb_hit()
+
 #=====SIGNALS=====#
 
 func bomb_hit():

@@ -10,6 +10,10 @@ var bound_entered = false
 var ready_to_fire = false
 var game_running = true
 var num_invaders_left = 44
+var animation_played = false
+var timer = 1
+var speed = 1
+var difficulty = 1
 
 # used to determine the random invader to fire their weapon
 var rand_row
@@ -94,10 +98,23 @@ func get_visible_invaders():
 					visible_array.push_back(j)
 	return visible_array
 
+func get_invaders():
+	var rows = get_children()
+	var invader_row
+	var invader
+	var invader_array = []
+	
+	for i in rows:
+		if !(i is Timer):
+			invader_row = i.get_children()
+			for j in invader_row:
+				invader_array.push_back(j)
+	return invader_array
+	
+
 func start_timers():
 	$MoveTimer.start()
 	$ShootTimer.start()
-	
 func stop_timers():
 	$MoveTimer.stop()
 	$ShootTimer.stop()
@@ -106,11 +123,30 @@ func stop_timers():
 
 # on each timer reset, position of the Invader nodes are moved
 func _on_MoveTimer_timeout():
+	var invaders = get_invaders()
+	
+	if !animation_played:
+		for i in invaders:
+			i.get_node("Sprite").hide()
+			i.get_node("AnimatedSprite").show()
+			i.animate()
+			pass
+		animation_played = true
+	
+	
+	print($MoveTimer.wait_time)
 	# moves invaders down an interval after edge is met
 	if bound_entered:
 		print("bound entered")
-		position.y += 10
+		position.y += 15
 		bound_entered = false
+		if timer >= 0.5:
+			timer -= 0.1
+		elif timer <= 0.5:
+			timer -= 0.01
+		elif timer <= 0.2 && timer > 0.02:
+			timer -= 0.001
+		$MoveTimer.wait_time = timer
 		
 	elif !bound_entered:
 		update_position()

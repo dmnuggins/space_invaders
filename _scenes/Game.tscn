@@ -1,12 +1,19 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
+[ext_resource path="res://_assets/fonts/space_invaders.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://_scenes/Game.gd" type="Script" id=2]
 
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 399 )
+extents = Vector2( 4, 363.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 4, 399 )
+extents = Vector2( 4, 363.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 12, 400 )
@@ -15,7 +22,7 @@ extents = Vector2( 12, 400 )
 extents = Vector2( 12, 399.25 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 300, 29 )
+extents = Vector2( 300, 61 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 300, 32 )
@@ -31,15 +38,66 @@ color = Color( 0, 0, 0, 1 )
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource( 8 )
 
-[node name="Score" type="Control" parent="UI"]
+[node name="Points" type="Control" parent="UI"]
+margin_top = 10.0
 margin_right = 600.0
+margin_bottom = 80.0
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UI/Points"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -32.0
+margin_right = 300.0
+margin_bottom = 32.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Points/ScoreContainer"]
+margin_left = 120.0
+margin_right = 180.0
 margin_bottom = 64.0
 
-[node name="ScoreLabel" type="Label" parent="UI/Score"]
-margin_right = 40.0
-margin_bottom = 14.0
+[node name="ScoreLabel" type="Label" parent="UI/Points/ScoreContainer/VBoxContainer"]
+margin_right = 60.0
+margin_bottom = 22.0
+text = "SCORE"
+align = 1
+
+[node name="Score" type="Label" parent="UI/Points/ScoreContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 60.0
+margin_bottom = 48.0
 text = "000"
+align = 1
+
+[node name="HighScoreContainer" type="HBoxContainer" parent="UI/Points"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -32.0
+margin_bottom = 32.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Points/HighScoreContainer"]
+margin_left = 98.0
+margin_right = 202.0
+margin_bottom = 64.0
+
+[node name="HighScoreLabel" type="Label" parent="UI/Points/HighScoreContainer/VBoxContainer"]
+margin_right = 104.0
+margin_bottom = 22.0
+text = "HIGHSCORE"
+align = 1
+
+[node name="HighScore" type="Label" parent="UI/Points/HighScoreContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 104.0
+margin_bottom = 48.0
+text = "000"
+align = 1
 
 [node name="Status" type="Control" parent="UI"]
 margin_top = 752.0
@@ -58,13 +116,13 @@ text = "000"
 [node name="LeftBound" type="Area2D" parent="Bounds/InvaderBounds" groups=["bounds"]]
 
 [node name="LeftBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/LeftBound"]
-position = Vector2( 12, 400 )
+position = Vector2( 12, 435.5 )
 shape = SubResource( 1 )
 
 [node name="RightBound" type="Area2D" parent="Bounds/InvaderBounds" groups=["bounds"]]
 
 [node name="RightBoundCollider" type="CollisionShape2D" parent="Bounds/InvaderBounds/RightBound"]
-position = Vector2( 588, 400 )
+position = Vector2( 588, 435.5 )
 shape = SubResource( 2 )
 
 [node name="PlayerBounds" type="Node2D" parent="Bounds"]
@@ -86,7 +144,7 @@ shape = SubResource( 4 )
 [node name="Top" type="StaticBody2D" parent="Bounds/ProjectileBounds" groups=["projectile_bounds"]]
 
 [node name="TopCollider" type="CollisionShape2D" parent="Bounds/ProjectileBounds/Top"]
-position = Vector2( 300, -29 )
+position = Vector2( 300, 3 )
 shape = SubResource( 5 )
 
 [node name="Bottom" type="StaticBody2D" parent="Bounds/ProjectileBounds" groups=["projectile_bounds"]]
@@ -96,6 +154,7 @@ position = Vector2( 300, 832 )
 shape = SubResource( 6 )
 
 [node name="BonusSpawns" type="Node2D" parent="."]
+position = Vector2( 0, 40 )
 
 [node name="LeftSpawn" type="Position2D" parent="BonusSpawns"]
 position = Vector2( 30, 60 )
