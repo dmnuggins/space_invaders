@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Bonus
 
-var speed = 200.0
+var speed = 150.0
 var velocity = Vector2.ZERO
 var value = 300
 
@@ -18,7 +18,7 @@ func _physics_process(delta):
 		var collision := get_slide_collision(slide)
 		
 		if collision.collider.is_in_group("wall"):
-			bonus_hit()
+			queue_free()
 		elif collision.collider.is_in_group("laser"):
 			collision.collider.laser_hit()
 			bonus_hit()

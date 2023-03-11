@@ -13,6 +13,8 @@ var bomb
 var laser_prefab = preload("res://_scenes/Laser.tscn")
 var laser
 
+onready var ui = $UI
+
 var bonus_invader_prefab = preload("res://_scenes/BonusInvader.tscn")
 var bonus_invader
 var bonus_direction = 1
@@ -20,8 +22,10 @@ var bonus_pos
 
 var projectiles
 
+var game_paused = false
+
 # status vars
-var num_lives
+var num_lives = 3
 var num_bombs
 
 # difficulty scaling
@@ -29,9 +33,12 @@ var difficulty = 1
 
 # score
 var score = 0
+var highscore = 0
+const filepath = "player://highscore.data"
 
 func _ready():
 	randomize()
+	load_highscore()
 	load_game()
 	invaders.connect("invader_shoot", self, "_on_invader_shoot_timeout")
 #	invaders = $Invaders
@@ -39,12 +46,7 @@ func _ready():
 	pass 
 
 func _process(delta):
-	if Input.is_action_pressed("reset"):
-		reset_game()
-	
-	if Input.is_action_pressed("start"):
-		start_game()
-	
+	# actions
 	if Input.is_action_just_pressed("shoot"):
 		if player != null:
 			if player.get_shoot_status():
@@ -57,21 +59,43 @@ func _process(delta):
 
 #=====GAME FLOW=====#
 
+func load_highscore():
+	var file = File.new()
+	if not file.file_exists(filepath): return
+	file.open(filepath, File.READ)
+	highscore = file.get_var()
+	file.close()
+
+func save_highscore():
+	var file = File.new()
+	file.open(filepath, File.WRITE)
+	file.store_var(highscore)
+	file.close()
+
+func set_highscore(value):
+	highscore = value
+	save_highscore()
+
 func start_game():
 	$BonusTimer.start()
 	invaders.start_timers()
 	player.ready_to_shoot()
+	$BackgroundMusic.play()
 
 func stop_game():
 	$BonusTimer.stop()
 	invaders.stop_timers()
 	player = null
+	$BackgroundMusic.stop()
 	pass
 
 func load_game():
 	num_lives = 3
 	score = 0
 	difficulty = 1
+	
+	ui.update_score(score)
+	ui.update_lives(num_lives)
 	
 	# instantiate invaders
 	invaders = invaders_prefab.instance()
@@ -91,7 +115,8 @@ func load_game():
 func reset_game():
 	# despawn all invaders
 	invaders.queue_free()
-	player.queue_free()
+	if player != null:
+		player.queue_free()
 	# despawn all projectiles
 	projectiles = get_tree().get_nodes_in_group("projectiles")
 	for projectile in projectiles:
@@ -104,6 +129,10 @@ func reset_game():
 	
 	load_game()
 
+func game_over():
+	ui.show_menu()
+	pass
+
 func spawn_bonus_ship():
 	bonus_invader = bonus_invader_prefab.instance()
 	bonus_invader.init(bonus_direction)
@@ -111,15 +140,20 @@ func spawn_bonus_ship():
 	bonus_invader.global_position = bonus_pos
 	pass
 
-func update_score():
-	$UI/Points/ScoreContainer/VBoxContainer/Score.text = str(score)
-
 #=====SIGNALS=====#
 
 # update life counter when player is hit
 func _on_Player_player_hit():
-	$RespawnTimer.start()
 	stop_game()
+	$PlayerHit.play()
+	print("player_hit")
+	num_lives -= 1
+	ui.update_lives(num_lives)
+	if num_lives < 0:
+		game_over()
+	else:
+		$RespawnTimer.start()
+
 	pass # Replace with function body.
 
 # on timeout, spawn bonus_invader
@@ -141,16 +175,20 @@ func _on_BonusTimer_timeout():
 
 func _on_bonus_invader_hit(value: int):
 	score += value
-	update_score()
+	$Hit.play()
+	ui.update_score(score)
 	pass
 
 func _on_invader_hit(row: int):
 	score += (row * 10)
-	update_score()
+	print(score)
+	$Hit.play()
+	ui.update_score(score)
 	pass # Replace with function body.
 
 func _on_last_invader_hit():
 	$LevelTimer.start()
+	$BonusTimer.stop()
 	print("LEVEL COMPLETE")
 	pass
 
@@ -166,4 +204,14 @@ func _on_RespawnTimer_timeout():
 	player.connect("player_hit", self, "_on_Player_player_hit")
 	start_game()
 	$RespawnTimer.stop()
+	pass # Replace with function body.
+
+
+func _on_UI_start_game():
+	start_game()
+	pass # Replace with function body.
+
+
+func _on_UI_play_again():
+	reset_game()
 	pass # Replace with function body.

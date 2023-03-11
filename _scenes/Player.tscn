@@ -1,21 +1,29 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://_scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://_assets/player.png" type="Texture" id=2]
+[ext_resource path="res://_assets/sound/space_invaders_laser.mp3" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 28.9811, 10.8679 )
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 1 )
 speed = 200.0
 
-[node name="PlayerCollider" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, -5.96046e-08 )
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2( 4.76837e-07, -5.96046e-08 )
 scale = Vector2( 0.552083, 0.552083 )
-polygon = PoolVector2Array( -30.7925, 12.6793, -30.7925, -7.24529, 0, -27.1698, 30.7925, -7.24529, 30.7925, 12.6793 )
+shape = SubResource( 1 )
 
 [node name="Gun" type="Position2D" parent="."]
 position = Vector2( 0, -32 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 1, 0.133333, 1 )
 position = Vector2( 0, -4 )
 scale = Vector2( 1.34375, 1.34375 )
 texture = ExtResource( 2 )
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

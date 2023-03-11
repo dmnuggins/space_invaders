@@ -17,3 +17,4 @@ margin_left = -2.0
 margin_top = -16.0
 margin_right = 2.0
 margin_bottom = 16.0
+color = Color( 0, 1, 0.133333, 1 )

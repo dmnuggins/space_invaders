@@ -40,7 +40,10 @@ func set_shoot_status(status):
 func shoot(var projectile):
 	var l = projectile.instance()
 	l.position = $Gun.global_position
+	$Shoot.play()
 	return l
+
+
 
 #=====SIGNALS=====#
 func player_collision():

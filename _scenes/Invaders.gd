@@ -134,10 +134,10 @@ func _on_MoveTimer_timeout():
 		animation_played = true
 	
 	
-	print($MoveTimer.wait_time)
+#	print($MoveTimer.wait_time)
 	# moves invaders down an interval after edge is met
 	if bound_entered:
-		print("bound entered")
+#		print("bound entered")
 		position.y += 15
 		bound_entered = false
 		if timer >= 0.5:
