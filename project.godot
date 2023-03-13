@@ -46,16 +46,22 @@ _global_script_class_icons={
 
 config/name="space_invaders"
 run/main_scene="res://_scenes/Game.tscn"
+config/icon="res://_assets/invader_icon.png"
+config/windows_native_icon="res://_assets/favicon.ico"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://scripts/Global.gd"
 
 [display]
 
 window/size/width=600
 window/size/height=800
 window/size/resizable=false
+
+[global]
+
+image=false
 
 [gui]
 
