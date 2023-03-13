@@ -47,6 +47,10 @@ _global_script_class_icons={
 config/name="space_invaders"
 run/main_scene="res://_scenes/Game.tscn"
 
+[autoload]
+
+Global="*res://Global.gd"
+
 [display]
 
 window/size/width=600

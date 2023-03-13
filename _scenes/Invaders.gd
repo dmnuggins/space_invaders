@@ -9,7 +9,7 @@ var move_down_count = 0
 var bound_entered = false
 var ready_to_fire = false
 var game_running = true
-var num_invaders_left = 44
+var num_invaders_left = 0
 var animation_played = false
 var timer = 1
 var speed = 1
@@ -28,15 +28,19 @@ signal invader_shoot
 func _ready():
 	randomize()
 	_connect_signals()
+	count_invaders()
 
 func _process(delta):
 	# check if no invaders left
-	if no_invaders() && game_running:
+	if no_invaders():
 		$ShootTimer.stop()
 		$MoveTimer.stop()
-		print("NO MORE INVADERS")
-		game_running = false
 	pass
+
+func count_invaders():
+	invaders = get_tree().get_nodes_in_group("invader")
+	for invader in invaders:
+		num_invaders_left += 1
 
 # connects invader signals
 func _connect_signals():
@@ -133,7 +137,6 @@ func _on_MoveTimer_timeout():
 			pass
 		animation_played = true
 	
-	
 #	print($MoveTimer.wait_time)
 	# moves invaders down an interval after edge is met
 	if bound_entered:
@@ -171,9 +174,10 @@ func _on_ShootTimer_timeout():
 	pass
 
 func _on_invader_hit(row: int):
+	print(num_invaders_left)
 	num_invaders_left -= 1
 	if num_invaders_left == 0:
 		emit_signal("last_invader_hit")
-		print("last_invader_hit")
+		print("LAST INVADER HIT")
 	emit_signal("invader_hit", row)
 #	print("Row:", row)
